@@ -1,0 +1,115 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Course Form System{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="{% static 'js/main.js' %}"></script> 
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
+        <div class="container-fluid d-flex justify-content-between">
+            <a class="navbar-brand" href="{% url 'home' %}">Course Form System</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto d-flex">
+                    <li class="nav-item"><a class="nav-link {% if request.path == '/'|add:home %}active{% endif %}" href="{% url 'home' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link {% if request.path == '/'|add:about %}active{% endif %}" href="{% url 'about' %}">About</a></li>
+                    <li class="nav-item"><a class="nav-link {% if request.path == '/'|add:blog %}active{% endif %}" href="{% url 'blog' %}">Blog</a></li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ user.username }}
+                        </a>
+                        <div class="dropdown-menu custom-dropdown" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
+                            <a class="dropdown-item" href="{% url 'logout_user' %}">Logout</a>
+                        </div>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    
+    <div class="container-fluid">
+        <div class="row">
+            {% if user.is_authenticated %}
+            {% url 'student_dashboard' as student_dashboard_url %}
+            {% url 'hod_dashboard' as hod_dashboard_url %}
+            {% url 'submit_course_form' as submit_course_form_url %}
+            {% url 'signed_course_forms' as signed_course_forms_url %}
+            {% url 'send_signed_form'  as send_signed_form_url %}
+
+            
+            {% url 'course_forms' as course_forms_url %}
+            {% url 'profile' as profile_url %}
+            {% url 'update_profile' as update_profile_url %}
+
+            {% if request.path == student_dashboard_url or request.path == hod_dashboard_url or request.path == course_forms_url or request.path == submit_course_form_url or request.path == send_signed_form_url or request.path == signed_course_forms_url or request.path == profile_url or  request.path == update_profile_url %}
+            <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+                <div class="position-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/'|add:profile %}active{% endif %}" href="{% url 'profile' %}">
+                                Profile
+                            </a>
+                        </li>
+                        {% if user.student %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/'|add:submit_course_form %}active{% endif %}" href="{% url 'submit_course_form' %}">
+                                Submit Course Form
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/'|add:signed_course_forms %}active{% endif %}" href="{% url 'signed_course_forms' %}">
+                                Signed Course Forms
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if user.hod %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/'|add:course_forms %}active{% endif %}" href="{% url 'course_forms' %}">
+                                View Course Forms
+                            </a>
+                        </li>
+                        
+                        
+    
+                        <li class="nav-item">
+                            
+                                <a class="nav-link {% if request.path == send_signed_form_url %}active{% endif %}" href="{% url 'send_signed_form'  %}">    
+                                Send Signed Forms
+                            </a>
+                        </li>
+                        
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+            {% endif %}
+            {% endif %}
+
+            <main class="{% if user.is_authenticated %}col-md-9 ms-sm-auto col-lg-10 px-md-4{% else %}col-12{% endif %}">
+                <div class="container">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        {% block header %}{% endblock %}
+                    </div>
+                    {% block content %}{% endblock %}
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> 
+</body>
+</html>

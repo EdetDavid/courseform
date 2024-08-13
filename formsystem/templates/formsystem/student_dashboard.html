@@ -1,0 +1,38 @@
+<!-- student_dashboard.html -->
+{% extends 'formsystem/base.html' %}
+{% block title %}Student Dashboard{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h2>Welcome to the Student Dashboard</h2>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Profile</h5>
+                <p class="card-text">View and update your profile information.</p>
+                <a href="{% url 'profile' %}" class="btn btn-primary">View Profile</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Submit Course Form</h5>
+                <p class="card-text">Submit your course form for approval.</p>
+                <a href="{% url 'submit_course_form' %}" class="btn btn-primary">Submit Form</a>
+            </div>
+        </div>
+    </div>
+    <!-- Link to Signed Course Forms -->
+    <div class="col-lg-12 mt-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Signed Course Forms</h5>
+                <p class="card-text">View and download the course forms signed by HODs.</p>
+                <a href="{% url 'signed_course_forms' %}" class="btn btn-primary">View Signed Forms</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

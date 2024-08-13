@@ -1,0 +1,31 @@
+{% extends 'formsystem/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Register as HOD{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6"> 
+      <div class="card shadow-lg">
+        <div class="card-body p-5"> 
+          <h2 class="card-title text-center mb-4 font-weight-bold">Register as HOD</h2>
+
+          <form method="post" class="needs-validation" novalidate> 
+            {% csrf_token %}
+            {{ user_form|crispy }}
+            {{ hod_form|crispy }}
+
+            <button type="submit" class="btn btn-primary btn-lg w-100 mt-4">Register</button>
+          </form>
+
+          <div class="text-center mt-3">
+            Already have an account? <a href="{% url 'home' %}">Login</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

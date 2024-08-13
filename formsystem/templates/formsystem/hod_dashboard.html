@@ -1,0 +1,37 @@
+{% extends 'formsystem/base.html' %}
+{% block title %}HOD Dashboard{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h2>Welcome to the HOD Dashboard</h2>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Profile</h5>
+                <p class="card-text">View and update your profile information.</p>
+                <a href="{% url 'profile' %}" class="btn btn-primary">View Profile</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">View Course Forms</h5>
+                <p class="card-text">View and approve course forms submitted by students.</p>
+                <a href="{% url 'course_forms' %}" class="btn btn-primary">View Forms</a>
+            </div>
+        </div>
+    </div>
+     <!-- Link to Signed Course Forms -->
+    <div class="col-lg-6 mt-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Send Signed Forms</h5>
+                <p class="card-text">send back signed courseform to students </p>
+                <a href="{% url 'send_signed_form' %}" class="btn btn-primary">Send Signed Forms</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

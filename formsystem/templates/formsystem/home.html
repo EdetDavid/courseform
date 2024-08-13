@@ -1,0 +1,51 @@
+{% extends 'formsystem/base.html' %}
+{% load static %} 
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+  <div class="row justify-content-center"> 
+    <div class="col-md-6 col-lg-4"> 
+      <div class="card shadow-sm"> 
+        <div class="card-body p-4">
+          <h2 class="card-title text-center mb-4">Course Form System</h2>
+
+          <ul class="nav nav-tabs" id="loginTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="student-tab" data-bs-toggle="tab" data-bs-target="#studentLogin" type="button" role="tab" aria-controls="studentLogin" aria-selected="true">Student</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="hod-tab" data-bs-toggle="tab" data-bs-target="#hodLogin" type="button" role="tab" aria-controls="hodLogin" aria-selected="false">HOD</button>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="loginTabContent">
+            <div class="tab-pane fade show active" id="studentLogin" role="tabpanel" aria-labelledby="student-tab">
+              <form method="post" class="mt-3"> 
+                {% csrf_token %}
+                {{ student_form.as_p }}
+                <button type="submit" name="student_login" class="btn btn-primary w-100">Login</button>
+              </form>
+              <div class="text-center mt-3">
+                Don't have an account? <a href="{% url 'register_student' %}">Create One</a>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="hodLogin" role="tabpanel" aria-labelledby="hod-tab">
+              <form method="post" class="mt-3">
+                {% csrf_token %}
+                {{ hod_form.as_p }}
+                <button type="submit" name="hod_login" class="btn btn-primary w-100">Login</button>
+              </form>
+              <div class="text-center mt-3">
+                Don't have an account? <a href="{% url 'register_hod' %}">Create One</a>
+              </div>
+            </div>
+          </div> 
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

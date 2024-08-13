@@ -1,0 +1,25 @@
+{% extends 'formsystem/base.html' %}
+{% block title %}Signed Course Forms{% endblock %}
+{% block content %}
+<h2>Signed Course Forms</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Form</th>
+            <th>Signed At</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for form in signed_forms %}
+        <tr>
+            <td>{{ form.course_form.form_content.name }}</td>
+            <td>{{ form.signed_at|date:"Y-m-d H:i" }}</td>
+            <td>
+                <a href="{% url 'download_course_form' form.course_form.pk %}" class="btn btn-primary btn-sm">Download</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
