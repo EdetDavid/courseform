@@ -25,7 +25,42 @@ import os
 from django.conf import settings
 
 
+# def home(request):
+#     if request.method == "POST":
+#         if "student_login" in request.POST:
+#             student_form = AuthenticationForm(request, data=request.POST)
+#             if student_form.is_valid():
+#                 username = student_form.cleaned_data.get("username")
+#                 password = student_form.cleaned_data.get("password")
+#                 user = authenticate(username=username, password=password)
+#                 if user is not None and hasattr(user, "student"):
+#                     login(request, user)
+#                     return redirect("student_dashboard")
+#         elif "hod_login" in request.POST:
+#             hod_form = AuthenticationForm(request, data=request.POST)
+#             if hod_form.is_valid():
+#                 username = hod_form.cleaned_data.get("username")
+#                 password = hod_form.cleaned_data.get("password")
+#                 user = authenticate(username=username, password=password)
+#                 if user is not None and hasattr(user, "hod"):
+#                     login(request, user)
+#                     return redirect("hod_dashboard")
+#     else:
+#         student_form = AuthenticationForm()
+#         hod_form = AuthenticationForm()
+
+#     return render(
+#         request,
+#         "formsystem/home.html",
+#         {"student_form": student_form, "hod_form": hod_form},
+#     )
+
 def home(request):
+    student_form = AuthenticationForm()
+    hod_form = AuthenticationForm()
+    student_errors = None
+    hod_errors = None
+
     if request.method == "POST":
         if "student_login" in request.POST:
             student_form = AuthenticationForm(request, data=request.POST)
@@ -36,6 +71,11 @@ def home(request):
                 if user is not None and hasattr(user, "student"):
                     login(request, user)
                     return redirect("student_dashboard")
+                else:
+                    student_errors = "Invalid credentials or account does not exist."
+            else:
+                student_errors = student_form.errors.get("__all__")
+
         elif "hod_login" in request.POST:
             hod_form = AuthenticationForm(request, data=request.POST)
             if hod_form.is_valid():
@@ -45,14 +85,20 @@ def home(request):
                 if user is not None and hasattr(user, "hod"):
                     login(request, user)
                     return redirect("hod_dashboard")
-    else:
-        student_form = AuthenticationForm()
-        hod_form = AuthenticationForm()
+                else:
+                    hod_errors = "Invalid credentials or account does not exist."
+            else:
+                hod_errors = hod_form.errors.get("__all__")
 
     return render(
         request,
         "formsystem/home.html",
-        {"student_form": student_form, "hod_form": hod_form},
+        {
+            "student_form": student_form,
+            "hod_form": hod_form,
+            "student_errors": student_errors,
+            "hod_errors": hod_errors,
+        },
     )
 
 
