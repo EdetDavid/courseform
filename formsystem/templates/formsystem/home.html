@@ -1,13 +1,13 @@
 {% extends 'formsystem/base.html' %}
-{% load static %} 
+{% load static %}
 
 {% block title %}Home{% endblock %}
 
 {% block content %}
 <div class="container-fluid mt-4">
-  <div class="row justify-content-center"> 
-    <div class="col-md-6 col-lg-4"> 
-      <div class="card shadow-sm"> 
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+      <div class="card shadow-sm">
         <div class="card-body p-4">
           <h2 class="card-title text-center mb-4">Course Form System</h2>
 
@@ -22,9 +22,27 @@
 
           <div class="tab-content" id="loginTabContent">
             <div class="tab-pane fade show active" id="studentLogin" role="tabpanel" aria-labelledby="student-tab">
-              <form method="post" class="mt-3"> 
+              <form method="post" class="mt-3">
                 {% csrf_token %}
-                {{ student_form.as_p }}
+                
+                <div class="mb-3">
+                  {{ student_form.username.label_tag }}
+                  {{ student_form.username }}
+                  <!-- Exclude automatic error rendering -->
+                </div>
+
+                <div class="mb-3">
+                  {{ student_form.password.label_tag }}
+                  {{ student_form.password }}
+                  <!-- Exclude automatic error rendering -->
+                </div>
+
+                {% if student_errors %}
+                <div class="alert alert-danger mt-2">
+                  {{ student_errors.0 }}
+                </div>
+                {% endif %}
+                
                 <button type="submit" name="student_login" class="btn btn-primary w-100">Login</button>
               </form>
               <div class="text-center mt-3">
@@ -35,14 +53,32 @@
             <div class="tab-pane fade" id="hodLogin" role="tabpanel" aria-labelledby="hod-tab">
               <form method="post" class="mt-3">
                 {% csrf_token %}
-                {{ hod_form.as_p }}
+                
+                <div class="mb-3">
+                  {{ hod_form.username.label_tag }}
+                  {{ hod_form.username }}
+                  <!-- Exclude automatic error rendering -->
+                </div>
+
+                <div class="mb-3">
+                  {{ hod_form.password.label_tag }}
+                  {{ hod_form.password }}
+                  <!-- Exclude automatic error rendering -->
+                </div>
+
+                {% if hod_errors %}
+                <div class="alert alert-danger mt-2">
+                  {{ hod_errors.0 }}
+                </div>
+                {% endif %}
+                
                 <button type="submit" name="hod_login" class="btn btn-primary w-100">Login</button>
               </form>
               <div class="text-center mt-3">
                 Don't have an account? <a href="{% url 'register_hod' %}">Create One</a>
               </div>
             </div>
-          </div> 
+          </div>
         </div>
       </div>
     </div>
